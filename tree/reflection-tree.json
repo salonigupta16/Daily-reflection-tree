@@ -1,0 +1,200 @@
+{
+  "tree_metadata": {
+    "version": "1.0",
+    "description": "Daily Reflection Tree evaluating Locus, Orientation, and Radius."
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "text": "Welcome to your evening reflection. Let's take a few minutes to unpack today, not to judge it, but to understand how you showed up. Take a deep breath.",
+      "next": "A1_Q1"
+    },
+    {
+      "id": "A1_Q1",
+      "type": "question",
+      "text": "Think about the most frustrating setback or roadblock you faced today. What was your primary internal narrative?",
+      "options": [
+        { "label": "Why do these things keep happening to me/my project?", "signal": "locus:victim", "next": "A1_Q2" },
+        { "label": "This system/process is broken and someone needs to fix it.", "signal": "locus:victim", "next": "A1_Q2" },
+        { "label": "What is the immediate next step I can take to bypass this?", "signal": "locus:victor", "next": "A1_Q2" },
+        { "label": "How did my previous actions contribute to this roadblock?", "signal": "locus:victor", "next": "A1_Q2" }
+      ]
+    },
+    {
+      "id": "A1_Q2",
+      "type": "question",
+      "text": "When you look at the tasks you actually completed today, how did they get done?",
+      "options": [
+        { "label": "I pushed through the friction and made them happen.", "signal": "locus:victor", "next": "A1_Q3" },
+        { "label": "I got lucky with fewer interruptions than usual.", "signal": "locus:victim", "next": "A1_Q3" },
+        { "label": "I followed the schedule and did what was required of me.", "signal": "locus:victim", "next": "A1_Q3" },
+        { "label": "I proactively redesigned my workflow to ensure they got done.", "signal": "locus:victor", "next": "A1_Q3" }
+      ]
+    },
+    {
+      "id": "A1_Q3",
+      "type": "question",
+      "text": "An unplanned request or change disrupted your flow today. How did you react?",
+      "options": [
+        { "label": "I negotiated the priority and adjusted my timelines.", "signal": "locus:victor", "next": "A1_DECISION" },
+        { "label": "I accepted it, but felt resentful about the changing goalposts.", "signal": "locus:victim", "next": "A1_DECISION" },
+        { "label": "I paused, assessed the new constraint, and adapted.", "signal": "locus:victor", "next": "A1_DECISION" }
+      ]
+    },
+    {
+      "id": "A1_DECISION",
+      "type": "decision",
+      "conditions": [
+        { "if": "locus:victor >= 2", "next": "A1_REFLECT_VICTOR" },
+        { "if": "locus:victim >= 2", "next": "A1_REFLECT_VICTIM" }
+      ],
+      "default": "A1_REFLECT_VICTOR"
+    },
+    {
+      "id": "A1_REFLECT_VICTOR",
+      "type": "reflection",
+      "text": "It sounds like you held onto your agency today. Even when facing setbacks, you asked '{A1_Q1.answer}'. That's the mindset of a Victor—focusing on the variables within your control.",
+      "next": "BRIDGE_1_2"
+    },
+    {
+      "id": "A1_REFLECT_VICTIM",
+      "type": "reflection",
+      "text": "It sounds like today felt like it happened *to* you. You mentioned feeling '{A1_Q1.answer}'. It's normal to feel constrained, but remember: you always retain the power to choose your response to friction.",
+      "next": "BRIDGE_1_2"
+    },
+    {
+      "id": "BRIDGE_1_2",
+      "type": "bridge",
+      "text": "Now that we've looked at your sense of control, let's look at where you directed your energy today.",
+      "next": "A2_Q1"
+    },
+    {
+      "id": "A2_Q1",
+      "type": "question",
+      "text": "If you had to summarize your primary expectation of your workplace today, what was it?",
+      "options": [
+        { "label": "To be given clear directions and fair compensation for my time.", "signal": "orientation:entitled", "next": "A2_Q2" },
+        { "label": "To be recognized and appreciated for the hard work I put in.", "signal": "orientation:entitled", "next": "A2_Q2" },
+        { "label": "To find opportunities where my skills could solve existing problems.", "signal": "orientation:contribution", "next": "A2_Q2" },
+        { "label": "To unblock others and move the team's objectives forward.", "signal": "orientation:contribution", "next": "A2_Q2" }
+      ]
+    },
+    {
+      "id": "A2_Q2",
+      "type": "question",
+      "text": "When you interacted with colleagues today, what was the underlying transaction?",
+      "options": [
+        { "label": "I was mostly trying to get what I needed from them to finish my work.", "signal": "orientation:entitled", "next": "A2_Q3" },
+        { "label": "I was actively looking for ways to make their jobs slightly easier.", "signal": "orientation:contribution", "next": "A2_Q3" },
+        { "label": "We traded favors—I help them, they help me.", "signal": "orientation:entitled", "next": "A2_Q3" }
+      ]
+    },
+    {
+      "id": "A2_Q3",
+      "type": "question",
+      "text": "How did you view your 'job description' today?",
+      "options": [
+        { "label": "As a rigid set of boundaries protecting my time.", "signal": "orientation:entitled", "next": "A2_DECISION" },
+        { "label": "As a baseline, from which I looked for places to add unexpected value.", "signal": "orientation:contribution", "next": "A2_DECISION" },
+        { "label": "I didn't think about it; I just did whatever was put in front of me.", "signal": "orientation:entitled", "next": "A2_DECISION" }
+      ]
+    },
+    {
+      "id": "A2_DECISION",
+      "type": "decision",
+      "conditions": [
+        { "if": "orientation:contribution >= 2", "next": "A2_REFLECT_CONTRIB" },
+        { "if": "orientation:entitled >= 2", "next": "A2_REFLECT_ENTITLE" }
+      ],
+      "default": "A2_REFLECT_CONTRIB"
+    },
+    {
+      "id": "A2_REFLECT_CONTRIB",
+      "type": "reflection",
+      "text": "You operated as a value-creator today. By focusing on '{A2_Q1.answer}', you treated your environment as a place to contribute rather than a place to extract from.",
+      "next": "BRIDGE_2_3"
+    },
+    {
+      "id": "A2_REFLECT_ENTITLE",
+      "type": "reflection",
+      "text": "Today's focus seemed a bit transactional. You noted your primary expectation was '{A2_Q1.answer}'. A slight shift toward asking 'What does this situation require of me?' can unlock a lot of latent energy tomorrow.",
+      "next": "BRIDGE_2_3"
+    },
+    {
+      "id": "BRIDGE_2_3",
+      "type": "bridge",
+      "text": "Finally, let's zoom out and look at the radius of your awareness today.",
+      "next": "A3_Q1"
+    },
+    {
+      "id": "A3_Q1",
+      "type": "question",
+      "text": "When you made your most difficult decision today, whose needs were given the most weight?",
+      "options": [
+        { "label": "My own immediate needs (reducing stress, saving time).", "signal": "radius:ego", "next": "A3_Q2" },
+        { "label": "My direct manager's or immediate team's needs.", "signal": "radius:altro", "next": "A3_Q2" },
+        { "label": "The overarching goal of the organization or the end customer.", "signal": "radius:altro", "next": "A3_Q2" }
+      ]
+    },
+    {
+      "id": "A3_Q2",
+      "type": "question",
+      "text": "If you had to measure the 'success' of your day, what metric are you using internally right now?",
+      "options": [
+        { "label": "How much of my personal to-do list I cleared.", "signal": "radius:ego", "next": "A3_Q3" },
+        { "label": "How comfortable or stress-free the day was for me.", "signal": "radius:ego", "next": "A3_Q3" },
+        { "label": "How much capacity I built in my team or systems.", "signal": "radius:altro", "next": "A3_Q3" },
+        { "label": "How much closer the company moved to its strategic goals.", "signal": "radius:altro", "next": "A3_Q3" }
+      ]
+    },
+    {
+      "id": "A3_Q3",
+      "type": "question",
+      "text": "Think about a moment of friction with a colleague today. How did you view them?",
+      "options": [
+        { "label": "As an obstacle to my personal progress.", "signal": "radius:ego", "next": "A3_DECISION" },
+        { "label": "As a collaborator who might have different, valid constraints.", "signal": "radius:altro", "next": "A3_DECISION" },
+        { "label": "I didn't have any friction (working in isolation).", "signal": "radius:ego", "next": "A3_DECISION" }
+      ]
+    },
+    {
+      "id": "A3_DECISION",
+      "type": "decision",
+      "conditions": [
+        { "if": "radius:altro >= 2", "next": "A3_REFLECT_ALTRO" },
+        { "if": "radius:ego >= 2", "next": "A3_REFLECT_EGO" }
+      ],
+      "default": "A3_REFLECT_ALTRO"
+    },
+    {
+      "id": "A3_REFLECT_ALTRO",
+      "type": "reflection",
+      "text": "Your radius of concern is wide. Measuring success by '{A3_Q2.answer}' shows that you are thinking systemically, beyond just your own desk.",
+      "next": "PRE_SUMMARY"
+    },
+    {
+      "id": "A3_REFLECT_EGO",
+      "type": "reflection",
+      "text": "Your focus today was quite inward. Prioritizing '{A3_Q1.answer}' makes sense when you are overwhelmed, but it can create blind spots in the wider system.",
+      "next": "PRE_SUMMARY"
+    },
+    {
+      "id": "PRE_SUMMARY",
+      "type": "bridge",
+      "text": "Let's pull all of this together into a final view of your day.",
+      "next": "SUMMARY"
+    },
+    {
+      "id": "SUMMARY",
+      "type": "summary",
+      "text": "Today, you anchored your mindset in '{A1_Q1.answer}'. Your interactions were driven by the expectation '{A2_Q1.answer}', and your ultimate measure of the day was '{A3_Q2.answer}'. Keep these baselines in mind as you log off. Rest well, and tomorrow, you get to choose your path again.",
+      "next": "END"
+    },
+    {
+      "id": "END",
+      "type": "end",
+      "text": "Session Complete. Thank you for your honesty."
+    }
+  ]
+}
